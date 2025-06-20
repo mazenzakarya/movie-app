@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MovieService } from 'src/app/services/movie';
+import { DateFormatPipe } from '../../pipes/date-format-pipe';
+import { Movie } from 'src/app/interfaces/imovie';
+import { SearchResponse } from 'src/app/interfaces/isearch-response';
 
 @Component({
   selector: 'app-search-results',
-  standalone: true, // ✅ مهم جداً
-  imports: [CommonModule, RouterModule], // ✅ لتفعيل *ngIf, *ngFor, routerLink
+  standalone: true,
+  imports: [CommonModule, RouterModule, DateFormatPipe],
   templateUrl: './search-results.html',
-  styleUrls: ['./search-results.css']
+  styleUrls: ['./search-results.css'],
 })
 export class SearchResultsComponent implements OnInit {
   query: string = '';
-  results: any[] = [];
+  results: Movie[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -21,7 +24,7 @@ export class SearchResultsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       this.query = params.get('query') || '';
       this.searchMovies();
     });
@@ -29,9 +32,11 @@ export class SearchResultsComponent implements OnInit {
 
   searchMovies() {
     if (this.query.trim()) {
-      this.movieService.searchMovies(this.query).subscribe((res: any) => {
-        this.results = res.results;
-      });
+      this.movieService
+        .searchMovies(this.query)
+        .subscribe((res: SearchResponse) => {
+          this.results = res.results;
+        });
     }
   }
 

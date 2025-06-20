@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MovieService } from 'src/app/services/movie';
 import { WishlistService } from 'src/app/services/wishlist';
+import { Movie } from 'src/app/interfaces/imovie';
 
 @Component({
   selector: 'app-wishlist',
@@ -12,7 +13,7 @@ import { WishlistService } from 'src/app/services/wishlist';
   styleUrls: ['./wishlist.css'],
 })
 export class WishlistComponent implements OnInit {
-  movies: any[] = [];
+  movies: Movie[] = [];
 
   constructor(
     private movieService: MovieService,
@@ -28,9 +29,9 @@ export class WishlistComponent implements OnInit {
     const ids = this.wishlistService.getWishlist();
     this.movies = [];
     ids.forEach((id) => {
-      this.movieService
-        .getMovieDetails(id)
-        .subscribe((movie) => this.movies.push(movie));
+      this.movieService.getMovieDetails(id).subscribe((movie) => {
+        this.movies.push(movie);
+      });
     });
   }
 

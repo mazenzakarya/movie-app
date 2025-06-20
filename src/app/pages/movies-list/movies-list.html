@@ -6,18 +6,28 @@
         class="card-img-top"
         [alt]="movie.title"
         (click)="viewDetails(movie.id)"
-        style="cursor: pointer;"
+        style="cursor: pointer"
       />
       <div class="card-body">
         <h5 class="card-title">{{ movie.title }}</h5>
-        <p class="card-text">{{ movie.release_date }}</p>
+        <p class="card-text">{{ movie.release_date | dateFormat }}</p>
+        <p class="card-text">
+          Rating: ⭐ {{ movie.vote_average | number:'1.1-1' }} / 10
+        </p>
       </div>
+
       <div class="card-footer bg-white text-end">
-        <button class="btn btn-outline-danger btn-sm" (click)="toggleWishlist(movie.id)">
-          <i class="fa" [ngClass]="{
+        <button
+          class="btn btn-outline-danger btn-sm"
+          (click)="toggleWishlist(movie.id)"
+        >
+          <i
+            class="fa"
+            [ngClass]="{
             'fa-heart': isInWishlist(movie.id),
             'fa-heart-o': !isInWishlist(movie.id)
-          }"></i>
+          }"
+          ></i>
         </button>
       </div>
     </div>
@@ -25,7 +35,19 @@
 </div>
 
 <div class="d-flex justify-content-between align-items-center mt-4">
-  <button class="btn btn-secondary" [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
+  <button
+    class="btn btn-secondary"
+    [disabled]="currentPage === 1"
+    (click)="prevPage()"
+  >
+    Previous
+  </button>
   <span>Page {{ currentPage }}</span>
-  <button class="btn btn-secondary" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+  <button
+    class="btn btn-secondary"
+    [disabled]="currentPage === totalPages"
+    (click)="nextPage()"
+  >
+    Next
+  </button>
 </div>
