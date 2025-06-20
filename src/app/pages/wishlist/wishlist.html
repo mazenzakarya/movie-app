@@ -1,0 +1,25 @@
+<div *ngIf="movies.length === 0" class="text-center">
+  <p>Your wishlist is empty 😔</p>
+</div>
+
+<div class="row g-3" *ngIf="movies.length">
+  <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let movie of movies">
+    <div class="card h-100 shadow">
+      <img
+        [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+        class="card-img-top"
+        (click)="viewDetails(movie.id)"
+        style="cursor: pointer;"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="card-text">{{ movie.release_date }}</p>
+      </div>
+      <div class="card-footer text-end bg-white">
+        <button class="btn btn-danger btn-sm" (click)="removeFromWishlist(movie.id)">
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

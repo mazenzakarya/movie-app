@@ -1,0 +1,20 @@
+<h3>Search results for "{{ query }}"</h3>
+
+<div *ngIf="results.length === 0" class="mt-4 text-muted">No movies found.</div>
+
+<div class="row g-3 mt-3" *ngIf="results.length">
+  <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let movie of results">
+    <div class="card h-100 shadow">
+      <img
+        [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+        class="card-img-top"
+        (click)="viewDetails(movie.id)"
+        style="cursor: pointer;"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="card-text">{{ movie.release_date }}</p>
+      </div>
+    </div>
+  </div>
+</div>
